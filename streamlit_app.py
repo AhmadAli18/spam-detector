@@ -44,13 +44,46 @@ def predict_spam(email_text):
 #  Streamlit UI 
 st.set_page_config(page_title="Spam Email Classifier", page_icon="📩")
 st.title(" Spam Email Classifier")
+# Example emails
+spam_examples = [
+    "Subject: Congratulations! You've won a free iPhone 15. Click the link to claim now!",
+    "Subject: Get rich quick! Invest $500 in our crypto scheme and earn $10,000 in a week."
+]
 
-email_input = st.text_area("Paste your email content below:", height=200)
+ham_examples = [
+    "Subject: Meeting Reminder\nDon't forget about our team meeting tomorrow at 10 AM in the conference room.",
+    "Subject: Dinner Plans\nAre we still on for dinner tonight? Let me know what time works for you."
+]
 
+# Section for sample email buttons
+st.subheader("📌 Try Sample Emails")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("Spam Example 1"):
+        email_input = spam_examples[0]
+    if st.button("Spam Example 2"):
+        email_input = spam_examples[1]
+
+with col2:
+    if st.button("Non-Spam Example 1"):
+        email_input = ham_examples[0]
+    if st.button("Non-Spam Example 2"):
+        email_input = ham_examples[1]
+
+# Persistent email input
+if "email_input" not in st.session_state:
+    st.session_state.email_input = ""
+
+email_input = st.text_area("Paste your email content below:", value=st.session_state.email_input, height=200)
+
+# Update session state when a button is clicked
 if st.button("Check Spam"):
     if email_input.strip() == "":
         st.warning("Please enter some email content first.")
     else:
+        st.session_state.email_input = email_input
         label, confidence = predict_spam(email_input)
         if label == "Spam":
             st.error(f" Prediction: **{label}** ({confidence:.2%} confidence)")
