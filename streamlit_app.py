@@ -11,7 +11,7 @@ nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
 
 #  Load model and tokenizer 
-model = tf.keras.models.load_model('spam_model.h5')
+model = tf.keras.models.load_model('spam_model.keras')
 
 with open('tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
