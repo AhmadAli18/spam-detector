@@ -3,7 +3,7 @@ import streamlit as st
 import tensorflow as tf
 import pickle
 import string
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras.preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
 import nltk
 
